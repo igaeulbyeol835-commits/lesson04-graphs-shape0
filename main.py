@@ -296,3 +296,29 @@ st.plotly_chart(fig_sun, use_container_width=True)
 insight_section()
 
 st.divider()
+
+# ---------------------------------------------------------------- 구역 8 (직접 만든 질문)
+st.header("개봉 첫 주에 관객을 많이 모은 영화일수록 10위권에 더 오래 머무는가?")
+st.markdown("점 하나가 영화 한 편이며, 오른쪽 위로 뻗을수록 첫 주 관객이 많은 영화가 10위권에도 오래 머문 것입니다.")
+
+stay_df = movies.dropna(subset=["first_week_audi", "days_in_top10"])
+
+fig_stay = px.scatter(
+    stay_df,
+    x="first_week_audi",
+    y="days_in_top10",
+    hover_name="movieNm",
+    hover_data={"first_week_audi": ":,", "days_in_top10": ":,"},
+    labels={
+        "first_week_audi": "개봉 첫 주 관객 수(명)",
+        "days_in_top10": "10위권에 머문 날수(일)",
+    },
+)
+fig_stay.update_traces(marker=dict(size=9, opacity=0.75))
+fig_stay.update_layout(margin=dict(t=20, b=20, l=20, r=20))
+fig_stay.update_xaxes(tickformat=",")
+st.plotly_chart(fig_stay, use_container_width=True)
+
+insight_section()
+
+st.divider()
